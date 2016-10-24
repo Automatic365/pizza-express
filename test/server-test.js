@@ -110,5 +110,16 @@ describe('Server', () => {
         done();
       });
     });
+    it('should return a page that has the pizza toppings', (done) => {
+      var pizzaToppings = app.locals.pizzas.testPizza.toppings;
+
+      this.request.get('/pizzas/testPizza', (error, response) => {
+        if (error) { done(error); }
+        for (var i = 0; i < pizzaToppings.length; i++) {
+          assert(response.body.includes(pizzaToppings[i]), `"${response.body}" does not include "${pizzaToppings[i]}"`);
+        }
+        done();
+      });
+    });
   });
 });
